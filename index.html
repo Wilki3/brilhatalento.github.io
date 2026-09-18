@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brilha Talento</title>
+  <meta name="description" content="Brilha Talento — descubra, publique e acompanhe talentos.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="toast" class="toast"></div>
+
+  <section id="authScreen" class="auth-screen">
+    <div class="auth-art">
+      <div class="stage-lights"></div>
+      <div class="brand-mark">
+        <img src="assets/logo-star.png" alt="Brilha Talento">
+      </div>
+      <div class="brand-title">BRILHA<br><span>TALENTO</span></div>
+      <p>Aqui, cada talento<br>tem um palco!</p>
+      <div class="auth-actions">
+        <button class="btn primary" id="enterBtn">Entrar</button>
+      </div>
+    </div>
+
+  </section>
+
+  <main id="appScreen" class="app-screen hidden">
+    <header class="topbar">
+      <button class="icon-btn mobile-only" id="mobileBack">←</button>
+      <div class="logo-small"><span>★</span> BRILHA <b>TALENTO</b></div>
+      <div class="top-actions">
+        <button class="icon-btn" data-view="notifications" title="Notificações">♧</button>
+        <button class="avatar-button" data-view="profile"><img src="assets/avatar.svg" alt="Perfil"></button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <button class="side-link active" data-view="home"><span>⌂</span> Início</button>
+        <button class="side-link" data-view="explore"><span>⌕</span> Explorar</button>
+        <button class="side-link add-link" data-view="upload"><span>＋</span> Enviar talento</button>
+        <button class="side-link" data-view="favorites"><span>♡</span> Favoritos</button>
+        <button class="side-link" data-view="profile"><span>♙</span> Perfil</button>
+        <div class="sidebar-spacer"></div>
+        <button class="side-link" data-view="settings"><span>⚙</span> Configurações</button>
+        <button class="side-link" id="logoutBtn"><span>↪</span> Sair</button>
+      </aside>
+
+      <section class="content">
+        <!-- HOME -->
+        <div class="view active" id="view-home">
+          <div class="greeting">
+            <div><h1>Olá, <span id="userName">Karen</span>!</h1><p>Qual talento você quer ver hoje?</p></div>
+            <button class="icon-btn bell" data-view="notifications">♧</button>
+          </div>
+
+          <div class="search-box"><span>⌕</span><input id="homeSearch" placeholder="Buscar talentos..."></div>
+
+          <div class="hero-banner">
+            <img src="assets/stage.svg" alt="Palco">
+            <div class="hero-copy"><small></small><strong><br><br><em></em></strong></div>
+            <div class="dots"><i class="active"></i><i></i><i></i></div>
+          </div>
+
+          <section class="section">
+            <div class="section-head"><h2>Categorias</h2><button data-view="explore">Ver todas</button></div>
+            <div class="categories">
+              <button class="category" data-category="Música"><span>♫</span><small>Música</small></button>
+              <button class="category" data-category="Dança"><span>♟</span><small>Dança</small></button>
+              <button class="category" data-category="Canto"><span>♬</span><small>Canto</small></button>
+              <button class="category" data-category="Comédia"><span>☻</span><small>Comédia</small></button>
+              <button class="category" data-category="Arte"><span>✦</span><small>Arte</small></button>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head"><h2>Talentos em destaque</h2><button data-view="explore">Ver todos</button></div>
+            <div class="feature-grid" id="featuredGrid"></div>
+          </section>
+        </div>
+
+        <!-- EXPLORE -->
+        <div class="view" id="view-explore">
+          <div class="page-title"><button class="mobile-only back-view">←</button><h1>Explorar</h1></div>
+          <div class="search-box"><span>⌕</span><input id="exploreSearch" placeholder="Buscar talentos..."></div>
+          <div class="chips" id="categoryChips">
+            <button class="chip active" data-filter="Todos">Todos</button>
+            <button class="chip" data-filter="Música">Música</button>
+            <button class="chip" data-filter="Dança">Dança</button>
+            <button class="chip" data-filter="Canto">Canto</button>
+            <button class="chip" data-filter="Comédia">Comédia</button>
+            <button class="chip" data-filter="Arte">Arte</button>
+          </div>
+          <div class="talent-list" id="talentList"></div>
+        </div>
+
+        <!-- PROFILE -->
+        <div class="view" id="view-profile">
+          <div class="profile-header">
+            <button class="mobile-only back-view">←</button>
+            <button class="settings-gear" data-view="settings">⚙</button>
+            <img class="profile-avatar" src="assets/avatar.svg" alt="Karen">
+            <h1>Karen Vitória</h1><p>@karen.v</p>
+            <div class="stats"><div><b>12</b><small>Talentos</small></div><div><b>2.4k</b><small>Seguidores</small></div><div><b>48</b><small>Seguindo</small></div></div>
+            <button class="btn outline-purple compact" id="editProfile">Editar perfil</button>
+            <p class="profile-bio">Sonhe, se arrisque, brilhe ✨<br>O talento é só o começo.</p>
+          </div>
+          <div class="tabs"><button class="tab active" data-profile-tab="talents">Meus talentos</button><button class="tab" data-profile-tab="favorites">Favoritos</button></div>
+          <div class="profile-grid" id="profileGrid"></div>
+        </div>
+
+        <!-- UPLOAD -->
+        <div class="view" id="view-upload">
+          <div class="page-title"><button class="mobile-only back-view">←</button><h1>Enviar talento</h1></div>
+          <form id="uploadForm" class="upload-form">
+            <label class="upload-box" for="videoFile">
+              <span class="upload-icon">▣</span><strong>Adicione um vídeo</strong><small>Grave ou escolha da galeria</small>
+              <input id="videoFile" type="file" accept="video/*">
+              <div id="fileName"></div>
+            </label>
+            <label>Título do seu talento<input id="talentTitle" required placeholder="Ex: Minha música favorita"></label>
+            <label>Categoria<select id="talentCategory" required><option value="">Selecione uma categoria</option><option>Música</option><option>Dança</option><option>Canto</option><option>Comédia</option><option>Arte</option></select></label>
+            <label>Descrição (opcional)<textarea id="talentDescription" placeholder="Conte um pouco sobre o seu talento..."></textarea></label>
+            <button class="btn primary" type="submit">Publicar</button>
+          </form>
+        </div>
+
+        <!-- VIDEO -->
+        <div class="view" id="view-video">
+          <div class="video-page">
+            <button class="mobile-only back-view">←</button>
+            <div class="video-stage"><img id="videoTalentImage" src="assets/singer.svg" alt="Talento"><button class="play-button" id="playButton">▶</button></div>
+            <div class="video-info">
+              <button class="follow-btn" id="followBtn">Seguir</button>
+              <img src="assets/avatar.svg" class="mini-avatar" alt="">
+              <div><b id="videoTalentName">Maria Eduarda</b><small id="videoTalentHandle">@mariaeduarda</small></div>
+              <div class="video-actions"><button id="likeVideo">♡<small>2.8k</small></button><button>◌<small>156</small></button><button>↗<small>Compartilhar</small></button></div>
+            </div>
+            <p id="videoDescription">Sonhos também se cantam! 💜<br>#musica #talento #brilhatalento</p>
+            <div class="progress"><span></span></div>
+            <div class="comment-box"><input placeholder="Adicione um comentário..."><button>➤</button></div>
+          </div>
+        </div>
+
+        <!-- FAVORITES -->
+        <div class="view" id="view-favorites">
+          <div class="page-title"><button class="mobile-only back-view">←</button><h1>Favoritos</h1></div>
+          <div class="tabs favorite-tabs"><button class="tab active">Vídeos</button><button class="tab">Talentos</button></div>
+          <div class="favorite-list" id="favoriteList"></div>
+        </div>
+
+        <!-- NOTIFICATIONS -->
+        <div class="view" id="view-notifications">
+          <div class="page-title"><button class="mobile-only back-view">←</button><h1>Notificações</h1></div>
+          <div class="notifications">
+            <article><span class="notif-icon red">♥</span><div><b>Maria Eduarda curtiu seu vídeo</b><small>Há 12 minutos</small></div></article>
+            <article><span class="notif-icon gold">▢</span><div><b>Seu talento foi comentado</b><small>“Incrível! Você manda muito!” · Há 25 minutos</small></div></article>
+            <article><span class="notif-icon blue">♙</span><div><b>Você recebeu um novo seguidor</b><small>João Pedro começou a te seguir · Há 1 hora</small></div></article>
+            <article><span class="notif-icon purple">↗</span><div><b>Seu vídeo foi compartilhado</b><small>Há 2 horas</small></div></article>
+            <article><span class="notif-icon violet">▣</span><div><b>Ana Clara comentou no seu vídeo</b><small>“Que incrível! 👏” · Há 3 horas</small></div></article>
+          </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div class="view" id="view-settings">
+          <div class="page-title"><button class="mobile-only back-view">←</button><h1>Configurações</h1></div>
+          <div class="settings-profile"><img src="assets/avatar.svg"><div><b>Karen Vitória</b><small>@karen.v</small></div><span>›</span></div>
+          <div class="settings-list">
+            <button><span>♧</span> Notificações <b>›</b></button>
+            <button><span>♙</span> Privacidade <b>›</b></button>
+            <button><span>▢</span> Conta <b>›</b></button>
+            <button><span>?</span> Ajuda e suporte <b>›</b></button>
+            <button><span>ⓘ</span> Sobre o app <b>›</b></button>
+          </div>
+          <button class="btn outline-purple" id="logoutSettings">Sair</button>
+        </div>
+      </section>
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-view="home"><span>⌂</span><small>Início</small></button>
+      <button class="nav-item" data-view="explore"><span>⌕</span><small>Explorar</small></button>
+      <button class="nav-item add" data-view="upload"><span>＋</span></button>
+      <button class="nav-item" data-view="favorites"><span>♡</span><small>Favoritos</small></button>
+      <button class="nav-item" data-view="profile"><span>♙</span><small>Perfil</small></button>
+    </nav>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
